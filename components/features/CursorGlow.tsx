@@ -5,12 +5,21 @@ import { gsap } from "gsap";
 
 export function CursorGlow() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
   const cursorDotRef = useRef<HTMLDivElement>(null);
   const cursorRingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-    if (isTouchDevice) return;
+    setIsMounted(true);
+    if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
+      setIsTouch(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || isTouch) return;
+    if (!cursorDotRef.current || !cursorRingRef.current) return;
 
     // Set initial position outside viewport to hide before mouse moves
     gsap.set([cursorDotRef.current, cursorRingRef.current], { xPercent: -50, yPercent: -50 });
@@ -81,9 +90,9 @@ export function CursorGlow() {
       document.removeEventListener("mouseenter", handleMouseEnter);
       observer.disconnect();
     };
-  }, [isVisible]);
+  }, [isMounted, isTouch]);
 
-  if (typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0)) {
+  if (!isMounted || isTouch) {
     return null;
   }
 

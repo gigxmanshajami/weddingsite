@@ -111,7 +111,7 @@ export function About() {
           ref={scriptRef}
           className="block font-[family-name:var(--font-script)] text-5xl md:text-6xl lg:text-7xl text-primary/80 mb-2"
         >
-          Curating
+          Crafting
         </span>
 
         {/* Bold uppercase title */}
@@ -119,7 +119,7 @@ export function About() {
           ref={titleRef}
           className="heading-lg text-3xl md:text-4xl lg:text-[2.75rem] tracking-[2px]! font-normal! font-[math]! uppercase text-dark mb-10"
         >
-          BESPOKE EXPERIENCES
+          EXTRAORDINARY JOURNEYS
         </h2>
 
 
@@ -128,7 +128,7 @@ export function About() {
           ref={para1Ref}
           className="text-black text-base md:text-lg leading-[1.9] mb-10 max-w-6xl mx-auto"
         >
-          Dream Moments is a premier luxury wedding planning atelier with a nationwide presence across India. We specialize in curating breathtaking floral artistry, bespoke décor, and immersive event experiences. With an uncompromising dedication to detail, we ensure your celebration transcends the ordinary. From intricately designed centerpieces to magnificent architectural stage setups, our artisans transform any venue into an enchanting sanctuary that beautifully echoes your unique love story. Guided by meticulous planning and visionary creative flair, we bring your grandest dreams to life with effortless sophistication.
+          At Dream Moments, we don't just plan weddings; we design unforgettable milestones. Recognized across India for our uncompromising standard of luxury, we orchestrate celebrations that reflect your unique narrative. From awe-inspiring floral installations to intricately crafted architectural stages, our team transforms spaces into ethereal sanctuaries. With a masterful blend of meticulous planning and limitless creativity, we ensure every detail resonates with sophistication and grace.
         </p>
 
         {/* Second paragraph */}
@@ -136,7 +136,7 @@ export function About() {
           ref={para2Ref}
           className="text-black text-base md:text-lg leading-[1.9] max-w-6xl mx-auto"
         >
-          With Dream Moments at the helm, every fleeting second of your celebration is flawlessly orchestrated. Our collective of seasoned professionals works tirelessly to weave your vision into a captivating reality, leaving no detail to chance. From your first steps down the aisle to the final lingering notes of the evening, we cultivate a magical atmosphere that captivates you and your guests. Entrust us with your journey, and let our expertise and unwavering dedication turn your luxury wedding aspirations into an unforgettable legacy of love. Step into a world of elegance—choose Dream Moments for an experience beyond compare.
+          Your journey with us is defined by seamless execution and absolute peace of mind. Our seasoned professionals manage every fleeting moment, allowing you to immerse yourself entirely in the magic of your day. From the very first steps down the aisle to the final toast of the evening, we cultivate an atmosphere of pure enchantment. Trust our expertise to elevate your aspirations, turning a beautiful vision into an extraordinary legacy. Step into a world of unparalleled elegance with Dream Moments.
         </p>
       </div>
     </section>

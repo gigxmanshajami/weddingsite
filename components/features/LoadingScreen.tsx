@@ -60,19 +60,19 @@ export function LoadingScreen() {
     >
       {/* Spinning Mandala */}
       <div className="mb-8 animate-spin" style={{ animationDuration: "6s" }}>
-        <Mandala size={120} color="#C89B5C" opacity={0.3} />
+        <Mandala size={120} color="#C89B5C" opacity={0.8} />
       </div>
 
       {/* Brand Name */}
       <div>
-        <h1 ref={textRef} className="font-[family-name:var(--font-heading)] text-6xl md:text-7xl lg:text-8xl text-primary overflow-hidden flex font-bold tracking-tight">
+        <h1 ref={textRef} className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl lg:text-8xl text-primary overflow-hidden flex font-bold tracking-tight">
           {COMPANY.name.split("").map((char, i) => (
             <span key={i} className="char inline-block">
               {char === " " ? "\u00A0" : char}
             </span>
           ))}
         </h1>
-        <p className="text-center text-secondary text-xs uppercase tracking-[0.4em] mt-2 font-[family-name:var(--font-subheading)] opacity-80">
+        <p className="text-center text-secondary text-xs sm:text-sm uppercase tracking-[0.35em] md:tracking-[0.4em] mt-3 font-[family-name:var(--font-subheading)] opacity-90 font-semibold">
           {COMPANY.tagline}
         </p>
       </div>

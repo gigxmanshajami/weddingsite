@@ -12,7 +12,6 @@ import { gsap } from "gsap";
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
 
@@ -43,14 +42,7 @@ export function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [isMobileOpen]);
 
-  // Use GSAP for dropdown clip-path animation
-  const handleDropdownEnter = (label: string) => {
-    setActiveDropdown(label);
-  };
-
-  const handleDropdownLeave = () => {
-    setActiveDropdown(null);
-  };
+  // Dropdown logic removed
 
   return (
     <>
@@ -117,8 +109,6 @@ export function Navbar() {
               <div
                 key={link.label}
                 className="relative"
-                onMouseEnter={() => "children" in link ? handleDropdownEnter(link.label) : undefined}
-                onMouseLeave={handleDropdownLeave}
               >
                 <a
                   href={link.href}
@@ -130,32 +120,6 @@ export function Navbar() {
                   {link.label}
                   <span className="absolute bottom-0 left-0 h-[1px] w-0 transition-all duration-500 ease-out group-hover:w-full bg-primary" />
                 </a>
-
-                {/* GSAP Clip-path Dropdown */}
-                {"children" in link && (
-                  <div
-                    className={cn(
-                      "absolute top-full left-0 mt-4 w-60 glass rounded-xl shadow-2xl overflow-hidden transition-all duration-500 origin-top",
-                      activeDropdown === link.label ? "opacity-100 scale-y-100 translate-y-0" : "opacity-0 scale-y-0 -translate-y-2 pointer-events-none"
-                    )}
-                    style={{ transformOrigin: "top center" }}
-                  >
-                    <div className="py-2">
-                      {link.children.map((child, i) => (
-                        <a
-                          key={child.label}
-                          href={child.href}
-                          className="block px-6 py-3 text-sm text-dark hover:bg-secondary/10 hover:text-primary transition-colors font-[family-name:var(--font-body)]"
-                          style={{
-                            transitionDelay: activeDropdown === link.label ? `${i * 50}ms` : '0ms'
-                          }}
-                        >
-                          {child.label}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             ))}
           </div>

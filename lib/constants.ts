@@ -2,9 +2,9 @@ export const COMPANY = {
   name: "Dream Moments",
   tagline: "Luxury Wedding Planning",
   phone: "+91 99539 13445",
-  email: "hello@dreammoments.co.in",
+  email: "info@dreammoments.co.in",
   address: "42, Connaught Place, New Delhi, India 110001",
-  whatsapp: "919876543210",
+  whatsapp: "919953913445",
   instagram: "dreammoments_weddings",
   socials: {
     instagram: "https://instagram.com/dreammoments_weddings",

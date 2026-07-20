@@ -91,7 +91,7 @@ export default function RootLayout({
               description: "India's premier luxury wedding planning company",
               url: "https://dreammoments.in",
               telephone: "+91-98765-43210",
-              email: "hello@dreammoments.co.in",
+              email: "info@dreammoments.co.in",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "42, Connaught Place",

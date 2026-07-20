@@ -8,16 +8,16 @@ import { FloralDivider } from "@/components/decorative/FloralDivider";
 
 export function ContactCTA() {
   return (
-    <section className="relative py-32 md:py-40 lg:py-48 overflow-hidden">
+    <section className="relative min-h-[100dvh] flex items-center justify-center py-20 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <Image
           src="/images/3.jpg"
           alt="Luxury wedding celebration"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           sizes="100vw" />
-        <div className="absolute inset-0 bg-dark/70" />
+        <div className="absolute inset-0 bg-black/50" />
       </div>
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">

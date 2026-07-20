@@ -27,7 +27,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative min-h-screen w-full flex overflow-hidden bg-accent-light/30">
+    <section id="contact" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-accent-light/30 py-24 px-4 sm:px-6 lg:px-8">
 
       {/* Animated Gradient Background */}
       <div className="absolute inset-0 z-0">
@@ -42,7 +42,7 @@ export function Contact() {
         <div className="absolute bottom-[20%] left-[20%] w-16 h-16 bg-secondary/5 rounded-full blur-[3px] animate-[particle-float_18s_ease-in-out_infinite_4s]" />
       </div>
 
-      <div className="relative z-10 w-full min-h-screen flex flex-col lg:flex-row bg-white/40 backdrop-blur-xl">
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row bg-white/40 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl">
 
         {/* Left Side: Luxury Image & Info */}
         <div className="lg:w-5/12 relative min-h-[550px] lg:min-h-full flex flex-col justify-end p-8 md:p-12 lg:p-16">

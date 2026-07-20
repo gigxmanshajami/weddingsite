@@ -21,6 +21,8 @@ import { BackToTop } from "@/components/features/BackToTop";
 import { LoadingScreen } from "@/components/features/LoadingScreen";
 import { CursorGlow } from "@/components/features/CursorGlow";
 
+import { Showcase } from "@/components/sections/Showcase";
+
 export default function Home() {
   return (
     <>
@@ -31,16 +33,16 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <Showcase />
         <Services />
-        <WhyChooseUs />
+        {/* <WhyChooseUs /> */}
         <Gallery />
         <Destinations />
         <WeddingStyles />
-        <Process />
+        {/* <Process /> */}
         <Testimonials />
-        <Instagram />
         <FAQ />
-        <Blog />
+        {/* <Blog /> */}
         <ContactCTA />
         <Contact />
       </main>

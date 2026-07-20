@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { COMPANY, NAV_LINKS } from "@/lib/constants";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { gsap } from "gsap";
 
@@ -20,7 +21,7 @@ export function Navbar() {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     // Initial animation for logo
     if (logoRef.current) {
       gsap.fromTo(
@@ -29,7 +30,7 @@ export function Navbar() {
         { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out", delay: 2.2 } // after loading screen
       );
     }
-    
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -46,20 +47,51 @@ export function Navbar() {
   const handleDropdownEnter = (label: string) => {
     setActiveDropdown(label);
   };
-  
+
   const handleDropdownLeave = () => {
     setActiveDropdown(null);
   };
 
   return (
     <>
+      {/* Top Contact Bar */}
+      <div
+        className={cn(
+          "fixed top-0 left-0 right-0 z-[51] transition-all duration-500 ease-in-out overflow-hidden",
+          isScrolled
+            ? "max-h-0 opacity-0"
+            : "max-h-10 opacity-100"
+        )}
+      >
+        <div className="bg-dark/90 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-end gap-6 py-1.5">
+            <a
+              href={`mailto:${COMPANY.email}`}
+              className="flex items-center gap-1.5 text-[11px] text-white/70 hover:text-secondary transition-colors font-[family-name:var(--font-body)] tracking-wide"
+            >
+              <Mail className="w-3 h-3" />
+              {COMPANY.email}
+            </a>
+            <span className="w-px h-3 bg-white/20" />
+            <a
+              href={`tel:${COMPANY.phone}`}
+              className="flex items-center gap-1.5 text-[11px] text-white/70 hover:text-secondary transition-colors font-[family-name:var(--font-body)] tracking-wide"
+            >
+              <Phone className="w-3 h-3" />
+              {COMPANY.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Navigation */}
       <nav
         ref={navRef}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out",
+          "fixed left-0 right-0 z-50 transition-all duration-700 ease-in-out",
           isScrolled
-            ? "glass shadow-[0_4px_30px_rgba(0,0,0,0.04)] py-4 border-b border-secondary/20"
-            : "bg-transparent py-8 border-b border-transparent"
+            ? "top-0 bg-white py-4 shadow-sm"
+            : "top-[34px] bg-white py-7 border-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -67,18 +99,20 @@ export function Navbar() {
           <a
             ref={logoRef}
             href="#hero"
-            className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl tracking-wide origin-left"
+            className="block origin-left"
           >
-            <span className={cn(
-              "transition-colors duration-500",
-              isScrolled ? "text-primary" : "text-white"
-            )}>
-              {COMPANY.name}
-            </span>
+            <Image
+              src="/logo.png"
+              alt={COMPANY.name}
+              width={200}
+              height={60}
+              className="object-contain h-10 w-auto md:h-12"
+              priority
+            />
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-4">
             {NAV_LINKS.map((link) => (
               <div
                 key={link.label}
@@ -89,20 +123,17 @@ export function Navbar() {
                 <a
                   href={link.href}
                   className={cn(
-                    "relative font-[family-name:var(--font-heading)] text-[11px] uppercase tracking-[0.2em] font-semibold transition-colors duration-300 py-2 group block",
-                    isScrolled ? "text-dark hover:text-primary" : "text-white/80 hover:text-white"
+                    "relative font-[family-name:var(--font-heading)] text-[11px] uppercase tracking-[0.15em] font-semibold transition-colors duration-300 py-2 group block",
+                    "text-dark hover:text-primary"
                   )}
                 >
                   {link.label}
-                  <span className={cn(
-                    "absolute bottom-0 left-0 h-[1px] w-0 transition-all duration-500 ease-out group-hover:w-full",
-                    isScrolled ? "bg-primary" : "bg-white"
-                  )} />
+                  <span className="absolute bottom-0 left-0 h-[1px] w-0 transition-all duration-500 ease-out group-hover:w-full bg-primary" />
                 </a>
 
                 {/* GSAP Clip-path Dropdown */}
                 {"children" in link && (
-                  <div 
+                  <div
                     className={cn(
                       "absolute top-full left-0 mt-4 w-60 glass rounded-xl shadow-2xl overflow-hidden transition-all duration-500 origin-top",
                       activeDropdown === link.label ? "opacity-100 scale-y-100 translate-y-0" : "opacity-0 scale-y-0 -translate-y-2 pointer-events-none"
@@ -130,36 +161,25 @@ export function Navbar() {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-6">
-            <a
-              href={`tel:${COMPANY.phone}`}
-              className={cn(
-                "flex items-center gap-2 text-sm font-[family-name:var(--font-heading)] uppercase tracking-widest font-semibold transition-colors",
-                isScrolled ? "text-dark" : "text-white"
-              )}
-            >
-              <Phone className="w-3.5 h-3.5" />
-              <span className="hidden xl:inline">{COMPANY.phone}</span>
-            </a>
+          <div className="hidden lg:flex items-center gap-4">
             <Button
               variant={isScrolled ? "primary" : "outline"}
               size="sm"
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
             >
-              Enquire
+              Contact Us
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            onClick={() => setIsMobileOpen(true)}
             className={cn(
               "lg:hidden p-2 rounded-lg transition-colors cursor-pointer z-50 relative",
-              isScrolled || isMobileOpen ? "text-dark" : "text-white"
+              isScrolled ? "text-dark" : "text-dark"
             )}
-            aria-label="Toggle menu"
+            aria-label="Open menu"
           >
-            {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <Menu className="w-6 h-6" />
           </button>
         </div>
       </nav>
@@ -172,7 +192,7 @@ export function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-dark/40 backdrop-blur-md z-40 lg:hidden"
+              className="fixed inset-0 bg-dark/40 backdrop-blur-md z-[55] lg:hidden"
               onClick={() => setIsMobileOpen(false)}
             />
             <motion.div
@@ -180,10 +200,19 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
-              className="fixed top-0 right-0 bottom-0 w-[85vw] max-w-sm bg-background z-50 lg:hidden shadow-2xl"
+              className="fixed top-0 right-0 bottom-0 w-[85vw] max-w-sm bg-background z-[60] lg:hidden shadow-2xl"
             >
-              <div className="flex flex-col h-full pt-24 px-8 pb-8">
-                <nav className="flex-1 space-y-6">
+              <div className="flex flex-col h-full pt-8 px-8 pb-8 relative">
+                {/* Close Button Inside Drawer */}
+                <button
+                  onClick={() => setIsMobileOpen(false)}
+                  className="absolute top-6 right-6 p-2 text-dark hover:text-primary transition-colors z-10"
+                  aria-label="Close menu"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+
+                <nav className="flex-1 space-y-6 mt-16">
                   {NAV_LINKS.map((link, i) => (
                     <motion.a
                       key={link.label}

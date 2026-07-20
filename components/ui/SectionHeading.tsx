@@ -2,27 +2,31 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { Lotus } from "@/components/decorative/Lotus";
 
 interface SectionHeadingProps {
+  /** Script font word displayed above the title (e.g. "Curating") */
+  scriptText?: string;
+  /** The old label prop — now renders as scriptText if scriptText is not set */
   label?: string;
   title: string;
   description?: string;
   className?: string;
   align?: "center" | "left";
-  showOrnament?: boolean;
   light?: boolean;
 }
 
 export function SectionHeading({
+  scriptText,
   label,
   title,
   description,
   className,
   align = "center",
-  showOrnament = true,
   light = false,
 }: SectionHeadingProps) {
+  // Use scriptText if provided, otherwise convert label to script style
+  const displayScript = scriptText || label || "";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -35,24 +39,25 @@ export function SectionHeading({
         className
       )}
     >
-      {label && (
+      {/* Script font heading */}
+      {displayScript && (
         <span
           className={cn(
-            "inline-block font-[family-name:var(--font-subheading)] text-xs md:text-sm uppercase tracking-[0.3em] mb-4",
-            light ? "text-secondary-light" : "text-secondary"
+            "block font-[family-name:var(--font-script)] text-5xl md:text-6xl lg:text-7xl mb-1",
+            light ? "text-secondary-light/80" : "text-primary/80"
           )}
         >
-          {label}
+          {displayScript}
         </span>
       )}
+
+      {/* Bold uppercase title */}
       <h2
-        className={cn(
-          "font-[family-name:var(--font-heading)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-tight",
-          light ? "text-white" : "text-dark"
-        )}
+        className="heading-lg text-3xl md:text-4xl lg:text-[2.75rem] tracking-[2px]! font-normal! font-[math]! uppercase text-black mb-10"
       >
         {title}
       </h2>
+
       {description && (
         <p
           className={cn(
@@ -63,11 +68,6 @@ export function SectionHeading({
         >
           {description}
         </p>
-      )}
-      {showOrnament && (
-        <div className={cn("mt-6 md:mt-8", align === "center" && "flex justify-center")}>
-          <Lotus size={50} color={light ? "#D4AE74" : "#C89B5C"} />
-        </div>
       )}
     </motion.div>
   );

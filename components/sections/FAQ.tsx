@@ -9,16 +9,16 @@ import { cn } from "@/lib/utils";
 
 export function FAQ() {
   return (
-    <section id="faq" className="relative py-24 md:py-32 lg:py-40 bg-accent-light/30">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="relative py-24 md:py-32 lg:py-40 bg-[#f7f7f7]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          label="FAQ"
-          title="Questions & Answers"
+          scriptText="Frequently Asked"
+          title="Questions"
           description="Everything you need to know about planning your luxury wedding with us."
         />
 
         <ScrollReveal>
-          <Accordion.Root type="single" collapsible className="space-y-4">
+          <Accordion.Root type="single" collapsible className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             {faqItems.map((item, i) => (
               <Accordion.Item
                 key={i}

@@ -2,7 +2,7 @@ export const COMPANY = {
   name: "Dream Moments",
   tagline: "Luxury Wedding Planning",
   phone: "+91 99539 13445",
-  email: "hello@dreammoments.in",
+  email: "hello@dreammoments.co.in",
   address: "42, Connaught Place, New Delhi, India 110001",
   whatsapp: "919876543210",
   instagram: "dreammoments_weddings",
@@ -17,20 +17,12 @@ export const COMPANY = {
 export const NAV_LINKS = [
   { label: "Home", href: "#hero" },
   { label: "About", href: "#about" },
-  {
-    label: "Services",
-    href: "#services",
-    children: [
-      { label: "Wedding Planning", href: "#services" },
-      { label: "Destination Weddings", href: "#destinations" },
-      { label: "Venue Selection", href: "#services" },
-      { label: "Decor & Styling", href: "#services" },
-    ],
-  },
+  { label: "Services", href: "#services" },
   { label: "Gallery", href: "#gallery" },
   { label: "Destinations", href: "#destinations" },
+  { label: "Styles", href: "#wedding-styles" },
   { label: "Testimonials", href: "#testimonials" },
-
+  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ] as const;
 
@@ -66,14 +58,14 @@ export const ANIMATION = {
 } as const;
 
 export const IMAGES = {
-  hero: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80",
-  about: "https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?w=800&q=80",
-  contactCta: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1920&q=80",
+  hero: "/images/13.jpg",
+  about: "/images/12.jpg",
+  contactCta: "/images/11.jpg",
   gallery: {
     wedding: [
-      "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80",
-      "https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?w=600&q=80",
-      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80",
+      "/images/1.jpg",
+      "/images/2.jpg",
+      "/images/3.jpg",
     ],
     haldi: [
       "https://images.unsplash.com/photo-1604604994333-f1b0e9471186?w=600&q=80",
@@ -113,6 +105,12 @@ export const IMAGES = {
     shimla: "https://images.unsplash.com/photo-1597074866923-dc0589150458?w=800&q=80",
     jodhpur: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80",
     agra: "https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80",
+    delhi: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80",
+    gurugram: "https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80",
+    noida: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80",
+    ahmedabad: "https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?w=800&q=80",
+    faridabad: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80",
+    ghaziabad: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80",
   },
   instagram: [
     "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&q=80",

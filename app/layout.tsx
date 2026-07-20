@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cabin, Poppins, Roboto } from "next/font/google";
+import { Cabin, Poppins, Roboto, Great_Vibes } from "next/font/google";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import "./globals.css";
 
@@ -23,6 +23,13 @@ const roboto = Roboto({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
+  display: "swap",
+});
+
+const greatVibes = Great_Vibes({
+  variable: "--font-script",
+  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
 });
 
@@ -71,7 +78,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cabin.variable} ${poppins.variable} ${roboto.variable} h-full`}
+      className={`${cabin.variable} ${poppins.variable} ${roboto.variable} ${greatVibes.variable} h-full`}
     >
       <head>
         <script
@@ -84,7 +91,7 @@ export default function RootLayout({
               description: "India's premier luxury wedding planning company",
               url: "https://dreammoments.in",
               telephone: "+91-98765-43210",
-              email: "hello@dreammoments.in",
+              email: "hello@dreammoments.co.in",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "42, Connaught Place",
@@ -98,7 +105,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className="antialiased flex flex-col">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

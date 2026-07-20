@@ -36,6 +36,33 @@ const decorOptions: Option[] = [
   { label: "Ultra Luxury", value: 5 },
 ];
 
+const OptionButton = ({
+  options,
+  selected,
+  onChange,
+}: {
+  options: Option[];
+  selected: number;
+  onChange: (i: number) => void;
+}) => (
+  <div className="flex flex-wrap gap-2">
+    {options.map((opt, i) => (
+      <button
+        key={i}
+        onClick={() => onChange(i)}
+        className={cn(
+          "px-4 py-2 rounded-full text-sm transition-all cursor-pointer",
+          i === selected
+            ? "gradient-primary text-white shadow-md"
+            : "bg-white border border-border text-muted hover:border-secondary"
+        )}
+      >
+        {opt.label}
+      </button>
+    ))}
+  </div>
+);
+
 export function CostCalculator() {
   const [guests, setGuests] = useState(1);
   const [venue, setVenue] = useState(0);
@@ -54,33 +81,6 @@ export function CostCalculator() {
     if (n >= 100000) return `₹${(n / 100000).toFixed(1)} L`;
     return `₹${n.toLocaleString("en-IN")}`;
   };
-
-  const OptionButton = ({
-    options,
-    selected,
-    onChange,
-  }: {
-    options: Option[];
-    selected: number;
-    onChange: (i: number) => void;
-  }) => (
-    <div className="flex flex-wrap gap-2">
-      {options.map((opt, i) => (
-        <button
-          key={i}
-          onClick={() => onChange(i)}
-          className={cn(
-            "px-4 py-2 rounded-full text-sm transition-all cursor-pointer",
-            i === selected
-              ? "gradient-primary text-white shadow-md"
-              : "bg-white border border-border text-muted hover:border-secondary"
-          )}
-        >
-          {opt.label}
-        </button>
-      ))}
-    </div>
-  );
 
   return (
     <section id="calculator" className="relative py-24 md:py-32 lg:py-40">

@@ -65,7 +65,7 @@ export function LoadingScreen() {
 
       {/* Brand Name */}
       <div>
-        <h1 ref={textRef} className="font-[family-name:var(--font-heading)] text-4xl text-primary overflow-hidden flex">
+        <h1 ref={textRef} className="font-[family-name:var(--font-heading)] text-6xl md:text-7xl lg:text-8xl text-primary overflow-hidden flex font-bold tracking-tight">
           {COMPANY.name.split("").map((char, i) => (
             <span key={i} className="char inline-block">
               {char === " " ? "\u00A0" : char}

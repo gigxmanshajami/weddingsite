@@ -21,8 +21,8 @@ export function Process() {
     <section id="process" className="relative py-24 md:py-32 lg:py-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          label="Our Process"
-          title="How We Work"
+          scriptText="Our"
+          title="Process"
           description="A seamless journey from your first dream to your forever moment."
         />
 

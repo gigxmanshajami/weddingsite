@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import { AnimatedDivider } from "@/components/decorative/AnimatedDivider";
 
 const inputStyles =
-  "w-full px-5 py-4 rounded-xl bg-white/40 border border-secondary/20 text-dark placeholder:text-dark/40 focus:outline-none focus:border-secondary focus:bg-white/60 transition-all font-[family-name:var(--font-body)] text-sm backdrop-blur-sm";
+  "w-full px-0 py-3 bg-transparent border-b border-dark/20 text-dark placeholder:text-dark/40 focus:outline-none focus:border-secondary transition-colors font-[family-name:var(--font-body)] text-base";
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,8 +27,8 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative min-h-screen py-24 md:py-32 lg:py-0 overflow-hidden flex items-center">
-      
+    <section id="contact" className="relative min-h-screen w-full flex overflow-hidden bg-accent-light/30">
+
       {/* Animated Gradient Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-accent-light opacity-50" />
@@ -42,25 +42,25 @@ export function Contact() {
         <div className="absolute bottom-[20%] left-[20%] w-16 h-16 bg-secondary/5 rounded-full blur-[3px] animate-[particle-float_18s_ease-in-out_infinite_4s]" />
       </div>
 
-      <div className="relative z-10 w-full max-w-[90rem] mx-auto lg:h-[90vh] flex flex-col lg:flex-row shadow-[0_20px_60px_rgba(0,0,0,0.08)] bg-white/40 lg:rounded-[40px] overflow-hidden backdrop-blur-xl border border-white">
-        
+      <div className="relative z-10 w-full min-h-screen flex flex-col lg:flex-row bg-white/40 backdrop-blur-xl">
+
         {/* Left Side: Luxury Image & Info */}
-        <div className="lg:w-5/12 relative min-h-[400px] lg:min-h-full">
+        <div className="lg:w-5/12 relative min-h-[550px] lg:min-h-full flex flex-col justify-end p-8 md:p-12 lg:p-16">
           <Image
-            src={IMAGES.contactCta}
+            src={'/images/4.jpg'}
             alt="Luxury Indian Wedding Couple"
             fill
-            className="object-cover"
+            className="object-cover object-center z-0"
             sizes="(max-width: 1024px) 100vw, 40vw"
           />
-          <div className="absolute inset-0 gradient-overlay" />
-          
-          <div className="absolute inset-0 p-10 lg:p-16 flex flex-col justify-end text-white">
+          <div className="absolute inset-0 gradient-overlay z-10" />
+
+          <div className="relative z-20 flex flex-col justify-end text-white mt-auto pt-24">
             <h3 className="heading-xl text-4xl mb-4">Your Vision, Our Canvas</h3>
             <p className="text-white/80 font-light mb-10 max-w-sm">
               We take a limited number of commissions each year to ensure uncompromising dedication to your celebration.
             </p>
-            
+
             <div className="space-y-6 border-t border-white/20 pt-8">
               <a href={`mailto:${COMPANY.email}`} className="flex items-center gap-4 hover:text-secondary transition-colors group">
                 <div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center group-hover:border-secondary transition-colors">
@@ -86,51 +86,53 @@ export function Contact() {
 
         {/* Right Side: Glass Form */}
         <div className="lg:w-7/12 p-8 md:p-16 lg:p-20 flex flex-col justify-center">
-          <p className="subheading text-secondary mb-3">BEGIN THE JOURNEY</p>
-          <h2 className="heading-lg text-4xl md:text-5xl text-dark mb-10">
-            Book a <span className="italic">Consultation</span>
+          <span className="block font-[family-name:var(--font-script)] text-5xl md:text-6xl lg:text-7xl text-primary/80 mb-1">
+            Book a
+          </span>
+          <h2 className="heading-lg text-3xl md:text-4xl lg:text-[2.75rem] tracking-[2px]! font-normal! font-[math]! uppercase text-black mb-10">
+            Consultation
           </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid sm:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-dark/60 font-semibold">Full Name *</label>
+          <form onSubmit={handleSubmit} className="space-y-10">
+            <div className="grid sm:grid-cols-2 gap-x-8 gap-y-10">
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Full Name *</label>
                 <input required type="text" placeholder="Your name" className={inputStyles} />
               </div>
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-dark/60 font-semibold">Email *</label>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Email *</label>
                 <input required type="email" placeholder="you@email.com" className={inputStyles} />
               </div>
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-dark/60 font-semibold">Phone *</label>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Phone *</label>
                 <input required type="tel" placeholder="+91 XXXX XXXXX" className={inputStyles} />
               </div>
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-dark/60 font-semibold">Wedding Date</label>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Wedding Date</label>
                 <input type="date" className={inputStyles} />
               </div>
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-dark/60 font-semibold">Budget Range</label>
-                <select className={cn(inputStyles, "appearance-none cursor-pointer")}>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Budget Range</label>
+                <select className={cn(inputStyles, "cursor-pointer")}>
                   <option value="">Select range</option>
                   {BUDGET_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </div>
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-dark/60 font-semibold">Guest Count</label>
-                <select className={cn(inputStyles, "appearance-none cursor-pointer")}>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Guest Count</label>
+                <select className={cn(inputStyles, "cursor-pointer")}>
                   <option value="">Select count</option>
                   {GUEST_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </div>
             </div>
 
-            <div className="space-y-2 pt-2">
-              <label className="text-xs uppercase tracking-widest text-dark/60 font-semibold">Tell us about your vision</label>
+            <div className="space-y-1">
+              <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Tell us about your vision</label>
               <textarea rows={3} placeholder="Locations you're considering, styles you love..." className={cn(inputStyles, "resize-none")} />
             </div>
 
-            <div className="pt-6">
+            <div className="pt-4">
               <Button
                 type="submit"
                 variant="primary"

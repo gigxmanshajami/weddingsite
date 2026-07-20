@@ -9,8 +9,8 @@ export function Blog() {
     <section id="blog" className="relative py-24 md:py-32 lg:py-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          label="Our Blog"
-          title="Latest Wedding Tips"
+          scriptText="Latest"
+          title="Wedding Tips"
           description="Expert insights, trends, and inspiration for your dream celebration."
         />
 

@@ -1,24 +1,68 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MagneticButton } from "@/components/ui/MagneticButton";
-import { TextReveal } from "@/components/ui/TextReveal";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { IMAGES } from "@/lib/constants";
-import { ChevronDown } from "lucide-react";
+
+const slides = [
+  {
+    image: '/images/12.png',
+    scriptText: "Crafting",
+    title: "Unforgettable\nWedding Experiences",
+  },
+  {
+    image: '/images/13.png',
+    scriptText: "Bringing",
+    title: "Dreams\nTo Life",
+  },
+  {
+    image: '/images/10.png',
+    scriptText: "Celebrating",
+    title: "Love\nIn Grand Style",
+  },
+  {
+    image: '/images/5.png',
+    scriptText: "Creating",
+    title: "Timeless\nMemories",
+  },
+];
 
 export function Hero() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  const goToSlide = useCallback((index: number) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide(index);
+    setTimeout(() => setIsTransitioning(false), 800);
+  }, [isTransitioning]);
+
+  const nextSlide = useCallback(() => {
+    goToSlide((currentSlide + 1) % slides.length);
+  }, [currentSlide, goToSlide]);
+
+  const prevSlide = useCallback(() => {
+    goToSlide((currentSlide - 1 + slides.length) % slides.length);
+  }, [currentSlide, goToSlide]);
+
+  // Auto-advance carousel
   useEffect(() => {
-    // Parallax and fade effects on scroll
-    if (!containerRef.current || !imageRef.current || !overlayRef.current) return;
+    intervalRef.current = setInterval(nextSlide, 5000);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [nextSlide]);
+
+  // Parallax on scroll
+  useEffect(() => {
+    if (!containerRef.current) return;
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -29,130 +73,146 @@ export function Hero() {
       },
     });
 
-    // Image zooms in and moves down slowly (parallax)
-    tl.to(imageRef.current, {
-      yPercent: 30,
-      scale: 1.1,
-      ease: "none",
-    }, 0);
-
-    // Overlay gets darker
-    tl.to(overlayRef.current, {
-      opacity: 0.8,
-      ease: "none",
-    }, 0);
-
-    // Content moves up and fades out
     if (contentRef.current) {
       tl.to(contentRef.current, {
-        yPercent: -50,
+        yPercent: -30,
         opacity: 0,
         ease: "none",
       }, 0);
     }
+
+    return () => {
+      tl.kill();
+    };
   }, []);
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      id="hero" 
-      className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden"
+      id="hero"
+      className="relative w-full h-[100svh] lg:h-auto lg:aspect-[1672/941] overflow-hidden"
     >
-      {/* Background Image with GSAP initial scale down animation */}
-      <div className="absolute inset-0 w-full h-full">
-        <Image
-          ref={imageRef}
-          src={IMAGES.hero}
-          alt="Luxury Indian Wedding Celebration"
-          fill
-          priority
-          className="object-cover animate-image-scale-down"
-          sizes="100vw"
-          quality={90}
-          style={{ transformOrigin: "center center" }}
-        />
-        {/* Animated Particles/Dust (CSS) */}
-        <div className="absolute inset-0 opacity-40 pointer-events-none">
-          <div className="absolute top-[20%] left-[10%] w-2 h-2 bg-secondary rounded-full filter blur-[1px] animate-[particle-float_8s_ease-in-out_infinite]" />
-          <div className="absolute top-[60%] left-[30%] w-3 h-3 bg-white rounded-full filter blur-[2px] animate-[particle-float_12s_ease-in-out_infinite_2s]" />
-          <div className="absolute top-[40%] right-[20%] w-1.5 h-1.5 bg-secondary rounded-full filter blur-[1px] animate-[particle-float_10s_ease-in-out_infinite_1s]" />
-          <div className="absolute top-[70%] right-[10%] w-4 h-4 bg-white rounded-full filter blur-[3px] animate-[particle-float_15s_ease-in-out_infinite_3s]" />
+      {/* Carousel slides */}
+      {slides.map((slide, index) => (
+        <div
+          key={index}
+          className="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out"
+          style={{ opacity: index === currentSlide ? 1 : 0, zIndex: index === currentSlide ? 1 : 0 }}
+        >
+          <Image
+            src={slide.image}
+            alt={`Wedding slide ${index + 1}`}
+            fill
+            priority={index === 0}
+            className="object-cover! transition-transform duration-[8000ms] ease-out"
+            sizes="100vw"
+            quality={100}
+            style={{
+              transform: index === currentSlide ? "scale(1.08)" : "scale(1)",
+            }}
+          />
         </div>
-        <div ref={overlayRef} className="absolute inset-0 bg-dark/40 transition-opacity duration-1000" />
-      </div>
+      ))}
 
-      <div ref={contentRef} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center mt-16">
-        
-        {/* Subtitle */}
-        <div className="overflow-hidden mb-6">
-          <p className="subheading text-secondary animate-[slideUp_1s_ease-out_2s_both]">
-            India&apos;s Premier Wedding Planners
-          </p>
-        </div>
+      {/* White fade overlay — Desktop */}
+      <div
+        className="absolute inset-0 z-[2] pointer-events-none hidden md:block"
+        style={{
+          background: "linear-gradient(to right, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.75) 25%, rgba(255,255,255,0.3) 45%, transparent 60%)",
+        }}
+      />
+      {/* White fade overlay — Mobile (Increased fade to the right) */}
+      <div
+        className="absolute inset-0 z-[2] pointer-events-none block md:hidden"
+        style={{
+          background: "linear-gradient(to right, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.5) 80%, transparent 100%)",
+        }}
+      />
 
-        {/* Headline with TextReveal */}
-        <h1 className="heading-xl text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[80px] text-white max-w-5xl mx-auto mb-8">
-          <TextReveal text="Crafting" delay={2.2} />
-          <br />
-          <TextReveal text="Unforgettable" delay={2.4} />
-          <br />
-          <span className="italic text-secondary font-light">
-            <TextReveal text="Wedding Experiences" delay={2.6} />
-          </span>
-        </h1>
-
-        {/* Magnetic Button */}
-        <div className="mt-8 animate-[fadeIn_1s_ease-out_3s_both]">
-          <MagneticButton 
-            strength={0.4}
-            className="px-10 py-4 border border-secondary/50 text-white hover:bg-secondary/10 hover:border-secondary backdrop-blur-sm rounded-full text-sm font-[family-name:var(--font-subheading)] uppercase tracking-[0.2em] transition-all"
-            onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
-          >
-            Discover Our World
-          </MagneticButton>
-        </div>
-      </div>
-
-      {/* Floating Stats */}
-      <div 
-        ref={statsRef}
-        className="absolute bottom-12 left-0 right-0 z-10 hidden md:block animate-[fadeIn_1s_ease-out_3.5s_both]"
+      {/* Content — positioned on the left */}
+      <div
+        ref={contentRef}
+        className="relative z-10 h-full flex items-center pt-24 lg:pt-0"
       >
-        <div className="max-w-7xl mx-auto px-8 flex justify-between items-center text-white/80">
-          <div className="flex gap-12">
-            <div>
-              <p className="font-[family-name:var(--font-heading)] text-2xl text-white">500+</p>
-              <p className="text-xs uppercase tracking-widest text-secondary mt-1 font-[family-name:var(--font-subheading)]">Weddings</p>
-            </div>
-            <div>
-              <p className="font-[family-name:var(--font-heading)] text-2xl text-white">50+</p>
-              <p className="text-xs uppercase tracking-widest text-secondary mt-1 font-[family-name:var(--font-subheading)]">Destinations</p>
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
+          <div className="max-w-lg">
+            {/* Script heading — animated per slide */}
+            <span
+              key={`script-${currentSlide}`}
+              className="block font-[family-name:var(--font-script)] text-6xl md:text-7xl lg:text-8xl text-primary/80 mb-0 leading-[0.9] animate-hero-text-in"
+            >
+              {slides[currentSlide].scriptText}
+            </span>
 
-          <div className="flex flex-col items-center gap-2 cursor-pointer" onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}>
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">Scroll</span>
-            <ChevronDown className="w-4 h-4 text-secondary animate-bounce" />
+            {/* Elegant uppercase title */}
+            <h1
+              key={`title-${currentSlide}`}
+              className="font-[family-name:var(--font-heading)] font-normal font-[math]!  text-4xl md:text-5xl lg:text-[3.5rem] uppercase tracking-[3px] leading-[1.1] text-dark mt-2 animate-hero-text-in"
+              style={{ animationDelay: "0.15s" }}
+            >
+              {slides[currentSlide].title.split("\n").map((line, i) => (
+                <span key={i}>
+                  {line}
+                  {i < slides[currentSlide].title.split("\n").length - 1 && <br />}
+                </span>
+              ))}
+            </h1>
           </div>
         </div>
       </div>
-      
-      {/* Background scaling CSS animation */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes image-scale-down {
-          from { transform: scale(1.2); }
-          to { transform: scale(1); }
+
+      {/* Carousel navigation arrows */}
+      <div className="absolute z-10 bottom-28 md:bottom-1/2 md:translate-y-1/2 left-0 right-0 pointer-events-none">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between">
+          <button
+            onClick={prevSlide}
+            className="pointer-events-auto w-10 h-10 md:w-12 md:h-12 rounded-full bg-white  flex items-center justify-center hover:bg-white hover:border-dark/40 transition-all duration-300 cursor-pointer"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-10 h-10 text-dark" strokeWidth={1} />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="pointer-events-auto w-10 h-10 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center hover:bg-white hover:border-dark/40 transition-all duration-300 cursor-pointer"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-10 h-10 text-dark" strokeWidth={1} />
+          </button>
+        </div>
+      </div>
+
+      {/* Arrow/Chevron clip at the bottom */}
+      <div className="absolute bottom-0 left-0 right-0 z-20">
+        <svg
+          viewBox="0 0 1440 80"
+          preserveAspectRatio="none"
+          className="w-full h-[60px] md:h-[80px]"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0,0 L0,80 L1440,80 L1440,0 L760,0 L720,60 L680,0 Z"
+            fill="#FFFDFB"
+          />
+        </svg>
+      </div>
+
+      {/* CSS animations */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes hero-text-in {
+          from {
+            opacity: 0;
+            transform: translateY(25px);
+            filter: blur(4px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+          }
         }
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
-          to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        .animate-image-scale-down {
-          animation: image-scale-down 4s ease-out forwards;
+        .animate-hero-text-in {
+          animation: hero-text-in 0.8s ease-out both;
         }
       `}} />
     </section>

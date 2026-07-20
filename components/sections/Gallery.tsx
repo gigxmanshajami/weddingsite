@@ -6,15 +6,15 @@ import { AnimatedDivider } from "@/components/decorative/AnimatedDivider";
 
 export function Gallery() {
   return (
-    <section id="gallery" className="relative py-24 md:py-32 bg-background overflow-hidden">
-      <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div className="text-center mb-16 md:mb-24">
-          <p className="subheading text-secondary mb-4"><TextReveal text="OUR PORTFOLIO" /></p>
-          <h2 className="heading-xl text-4xl md:text-5xl lg:text-6xl text-dark">
-            <span className="italic font-light">Moments</span> in Time
+    <section id="gallery" className="relative py-24!  bg-background overflow-hidden">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <span className="block font-[family-name:var(--font-script)] text-5xl md:text-6xl lg:text-7xl text-primary/80 mb-1">
+            Our Portfolio
+          </span>
+          <h2 className="heading-lg text-3xl md:text-4xl lg:text-[2.75rem] tracking-[2px]! font-normal! font-[math]! uppercase text-black mb-10">
+            Moments In Time
           </h2>
-          <AnimatedDivider type="mandala" />
         </div>
 
         {/* Elfsight Instagram Feed */}

@@ -19,9 +19,9 @@ export function Instagram() {
     <section className="relative py-24 md:py-32 lg:py-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          label="Follow Us"
-          title="On Instagram"
-          description="Stay inspired with our latest celebrations and behind-the-scenes moments."
+          scriptText="Follow Our"
+          title="Journey"
+          description="A glimpse into the magical moments we create."
         />
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">

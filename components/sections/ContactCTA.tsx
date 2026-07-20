@@ -12,12 +12,11 @@ export function ContactCTA() {
       {/* Background */}
       <div className="absolute inset-0">
         <Image
-          src={IMAGES.contactCta}
+          src="/images/3.jpg"
           alt="Luxury wedding celebration"
           fill
           className="object-cover"
-          sizes="100vw"
-        />
+          sizes="100vw" />
         <div className="absolute inset-0 bg-dark/70" />
       </div>
 
@@ -30,14 +29,11 @@ export function ContactCTA() {
         >
           <FloralDivider color="#D4AE74" className="mb-8" />
 
-          <p className="font-[family-name:var(--font-subheading)] text-secondary-light text-xs sm:text-sm uppercase tracking-[0.4em] mb-6">
-            Begin Your Journey
-          </p>
-
-          <h2 className="font-[family-name:var(--font-heading)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-light leading-tight">
+          <span className="block font-[family-name:var(--font-script)] text-5xl md:text-6xl lg:text-7xl text-secondary-light/80 mb-1">
             Let&apos;s Plan Your
-            <br />
-            <span className="italic">Dream Wedding</span>
+          </span>
+          <h2 className="font-[family-name:var(--font-heading)] text-3xl md:text-4xl lg:text-[2.75rem] uppercase tracking-[2px] font-normal leading-tight text-white">
+            Dream Wedding
           </h2>
 
           <p className="mt-6 text-white/60 text-base md:text-lg max-w-xl mx-auto">

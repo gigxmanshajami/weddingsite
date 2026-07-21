@@ -11,7 +11,8 @@ export function CursorGlow() {
   const cursorRingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setIsMounted(true);
+    // Avoid setting state synchronously here, wrap in a microtask or just let it mount
+    queueMicrotask(() => setIsMounted(true));
     if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
       setIsTouch(true);
     }

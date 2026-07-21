@@ -128,7 +128,7 @@ export function About() {
           ref={para1Ref}
           className="text-black text-base md:text-lg leading-[1.9] mb-10 max-w-6xl mx-auto"
         >
-          At Dream Moments, we don't just plan weddings; we design unforgettable milestones. Recognized across India for our uncompromising standard of luxury, we orchestrate celebrations that reflect your unique narrative. From awe-inspiring floral installations to intricately crafted architectural stages, our team transforms spaces into ethereal sanctuaries. With a masterful blend of meticulous planning and limitless creativity, we ensure every detail resonates with sophistication and grace.
+          At                We don&apos;t just plan weddings; we design memories that resonate through generations. Our commitment to excellence, meticulous attention to detail, and passion for creating beauty ensure that your celebration is nothing short of perfection. your unique narrative. From awe-inspiring floral installations to intricately crafted architectural stages, our team transforms spaces into ethereal sanctuaries. With a masterful blend of meticulous planning and limitless creativity, we ensure every detail resonates with sophistication and grace.
         </p>
 
         {/* Second paragraph */}

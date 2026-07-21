@@ -27,13 +27,34 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsSubmitting(false);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        form.reset();
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        alert('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -57,7 +78,7 @@ export function Contact() {
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-        className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row bg-white/40 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl"
+        className="relative z-10 w-full max-w-8xl mx-auto flex flex-col lg:flex-row bg-white/40 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl"
       >
 
         {/* Left Side: Luxury Image & Info */}
@@ -72,6 +93,7 @@ export function Contact() {
             src={'/images/4.jpg'}
             alt="Luxury Indian Wedding Couple"
             fill
+            priority
             className="object-cover object-center z-0"
             sizes="(max-width: 1024px) 100vw, 40vw"
           />
@@ -107,86 +129,111 @@ export function Contact() {
         </motion.div>
 
         {/* Right Side: Glass Form */}
-        <div className="lg:w-7/12 p-8 md:p-16 lg:p-20 flex flex-col justify-center">
-          <motion.span
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0}
-            className="block font-[family-name:var(--font-script)] text-5xl md:text-6xl lg:text-7xl text-primary/80 mb-1"
-          >
-            Book a
-          </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={1}
-            className="heading-lg text-3xl md:text-4xl lg:text-[2.75rem] tracking-[2px]! font-normal! font-[math]! uppercase text-black mb-10"
-          >
-            Consultation
-          </motion.h2>
-
-          <motion.form
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-            onSubmit={handleSubmit}
-            className="space-y-10"
-          >
-            <div className="grid sm:grid-cols-2 gap-x-8 gap-y-10">
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Full Name *</label>
-                <input required type="text" placeholder="Your name" className={inputStyles} />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Email *</label>
-                <input required type="email" placeholder="you@email.com" className={inputStyles} />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Phone *</label>
-                <input required type="tel" placeholder="+91 XXXX XXXXX" className={inputStyles} />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Wedding Date</label>
-                <input type="date" className={inputStyles} />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Budget Range</label>
-                <select className={cn(inputStyles, "cursor-pointer")}>
-                  <option value="">Select range</option>
-                  {BUDGET_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
-                </select>
-              </div>
-              <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Guest Count</label>
-                <select className={cn(inputStyles, "cursor-pointer")}>
-                  <option value="">Select count</option>
-                  {GUEST_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
-                </select>
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Tell us about your vision</label>
-              <textarea rows={3} placeholder="Locations you're considering, styles you love..." className={cn(inputStyles, "resize-none")} />
-            </div>
-
-            <div className="pt-4">
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                disabled={isSubmitting}
-                className="w-full sm:w-auto px-12"
+        <div className="lg:w-8/12 p-8 md:p-16 lg:p-20 flex flex-col justify-center">
+          {submitted ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex flex-col items-center justify-center h-full space-y-6 text-center py-12"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+                className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-2"
               >
-                {submitted ? "Message Sent ✓" : isSubmitting ? "Sending..." : "Submit Inquiry"}
-              </Button>
+                <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </motion.div>
+              <h3 className="text-3xl md:text-4xl font-light text-dark font-[math]">Thank You</h3>
+              <p className="text-dark/60 max-w-sm mx-auto text-base">
+                Your consultation request has been beautifully received. We will be in touch with you shortly to begin planning your dream moments.
+              </p>
+            </motion.div>
+          ) : (
+            <div className="flex flex-col w-full">
+              <motion.span
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={0}
+                className="block font-[family-name:var(--font-script)] text-5xl md:text-6xl lg:text-7xl text-primary/80 mb-1"
+              >
+                Book a
+              </motion.span>
+              <motion.h2
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={1}
+                className="heading-lg text-3xl md:text-4xl lg:text-[2.75rem] tracking-[2px]! font-normal! font-[math]! uppercase text-black mb-10"
+              >
+                Consultation
+              </motion.h2>
+
+              <motion.form
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+                onSubmit={handleSubmit}
+                className="space-y-10"
+              >
+                <div className="grid sm:grid-cols-2 gap-x-8 gap-y-10">
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Full Name *</label>
+                    <input required name="name" type="text" placeholder="Your name" className={inputStyles} />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Email *</label>
+                    <input required name="email" type="email" placeholder="you@email.com" className={inputStyles} />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Phone *</label>
+                    <input required name="phone" type="tel" placeholder="+91 XXXX XXXXX" className={inputStyles} />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Wedding Date</label>
+                    <input type="date" name="date" className={inputStyles} />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Budget Range</label>
+                    <select name="budget" className={cn(inputStyles, "cursor-pointer")}>
+                      <option value="">Select range</option>
+                      {BUDGET_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Guest Count</label>
+                    <select name="guests" className={cn(inputStyles, "cursor-pointer")}>
+                      <option value="">Select count</option>
+                      {GUEST_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Tell us about your vision</label>
+                  <textarea name="vision" rows={3} placeholder="Locations you're considering, styles you love..." className={cn(inputStyles, "resize-none")} />
+                </div>
+
+                <div className="pt-4">
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="lg"
+                    disabled={isSubmitting}
+                    className="w-full sm:w-auto px-12"
+                  >
+                    {isSubmitting ? "Sending..." : "Submit Inquiry"}
+                  </Button>
+                </div>
+              </motion.form>
             </div>
-          </motion.form>
+          )}
         </div>
 
       </motion.div>

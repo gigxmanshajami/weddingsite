@@ -85,7 +85,7 @@ export function Showcase() {
                 custom={2}
                 className="text-white/70 text-sm md:text-base leading-[1.8] mb-8 max-w-lg"
               >
-                At Dream Moments, we elevate celebrations into breathtaking realities. With an uncompromising eye for detail and a passion for bespoke design, our team curates unparalleled luxury experiences. We don't just plan events; we orchestrate timeless memories that you and your guests will cherish forever.
+                At Dream Moments, we elevate celebrations into breathtaking realities. With an uncompromising eye for detail and a passion for bespoke design, our team curates unparalleled luxury experiences. We don&apos;t just plan events; we orchestrate timeless memories that you and your guests will cherish forever.
               </motion.p>
             </div>
           </div>

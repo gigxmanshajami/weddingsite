@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { testimonials } from "@/lib/data";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { AnimatedDivider } from "@/components/decorative/AnimatedDivider";
@@ -147,7 +148,13 @@ export function Testimonials() {
     <section id="testimonials" className="relative py-24 bg-black overflow-hidden">
       <div className="max-w-full mx-auto ">
 
-        <div className="text-center mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
+          className="text-center mb-20"
+        >
           <span className="block font-[family-name:var(--font-script)] text-5xl md:text-6xl lg:text-7xl text-secondary mb-1">
             Heartfelt Stories
           </span>
@@ -155,7 +162,7 @@ export function Testimonials() {
             From Our Beloved Clients
           </h2>
           <AnimatedDivider type="line" className="mt-8 mb-0" color="rgba(255,255,255,0.2)" />
-        </div>
+        </motion.div>
 
         {/* Horizontal Scroll Container with Edge Fades */}
         <div className="relative">

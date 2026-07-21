@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import {
   MapPin,
   Palette,
@@ -42,9 +43,23 @@ const services = [
   },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 60, scale: 0.9 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      delay: i * 0.1,
+      ease: [0.25, 0.4, 0.25, 1],
+    },
+  }),
+};
+
 export function Services() {
   return (
-    <section id="services" className="relative bg-black py-24  overflow-hidden">
+    <section id="services" className="relative bg-black py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Service details row — dynamic icons + titles + descriptions */}
@@ -52,8 +67,13 @@ export function Services() {
           {services.map((service, i) => {
             const IconComp = service.icon;
             return (
-              <div
+              <motion.div
                 key={i}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                custom={i}
                 className="group text-center flex flex-col items-center px-6 py-12 rounded-3xl hover:bg-white/5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-500 cursor-pointer"
               >
                 <div className="relative w-20 h-20 mb-8 rounded-full border border-secondary/30 flex items-center justify-center group-hover:bg-secondary group-hover:border-secondary transition-colors duration-500 shadow-sm group-hover:shadow-[0_10px_30px_rgba(158,115,30,0.3)]">
@@ -70,7 +90,7 @@ export function Services() {
                 <p className="text-white/60 text-[15px] leading-[1.8] max-w-xs group-hover:text-white/90 transition-colors duration-500">
                   {service.desc}
                 </p>
-              </div>
+              </motion.div>
             );
           })}
         </div>

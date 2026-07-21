@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { COMPANY, NAV_LINKS, IMAGES } from "@/lib/constants";
 import { Mandala } from "@/components/decorative/Mandala";
 import { Heart } from "lucide-react";
@@ -14,6 +15,15 @@ const footerServices = [
 const footerDestinations = [
   "Delhi", "Gurugram", "Noida", "Ahmedabad", "Faridabad", "Ghaziabad",
 ];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.1, ease: [0.25, 0.4, 0.25, 1] },
+  }),
+};
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -29,7 +39,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
 
           {/* Brand Column */}
-          <div className="lg:col-span-4">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            custom={0}
+            className="lg:col-span-4"
+          >
             <a href="#hero" className="block mb-6">
               <Image
                 src="/logo.png"
@@ -42,10 +59,17 @@ export function Footer() {
             <p className="text-white text-sm leading-relaxed max-w-sm mt-6 font-light">
               We don&apos;t just plan weddings; we craft legacies of love. Let&apos;s create something extraordinary together.
             </p>
-          </div>
+          </motion.div>
 
           {/* Links Columns */}
-          <div className="lg:col-span-2">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            custom={1}
+            className="lg:col-span-2"
+          >
             <h4 className="subheading text-secondary mb-6">EXPLORE</h4>
             <ul className="space-y-4">
               {NAV_LINKS.slice(0, 5).map((link) => (
@@ -56,9 +80,16 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="lg:col-span-2">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            custom={2}
+            className="lg:col-span-2"
+          >
             <h4 className="subheading text-secondary mb-6">SERVICES</h4>
             <ul className="space-y-4">
               {footerServices.map((service) => (
@@ -69,9 +100,16 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="lg:col-span-2">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            custom={3}
+            className="lg:col-span-2"
+          >
             <h4 className="subheading text-secondary mb-6">DESTINATIONS</h4>
             <ul className="space-y-4">
               {footerDestinations.map((dest) => (
@@ -82,10 +120,17 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Social Icons & Contact */}
-          <div className="lg:col-span-2">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            custom={4}
+            className="lg:col-span-2"
+          >
             <h4 className="subheading text-secondary mb-6">CONNECT</h4>
             <div className="flex flex-col gap-4 mb-8">
               <a href={COMPANY.socials.instagram} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white hover:text-secondary transition-colors group" aria-label="Instagram">
@@ -99,12 +144,18 @@ export function Footer() {
                 <span className="text-sm font-light group-hover:text-secondary">+91 99539 13445</span>
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
 
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="flex flex-col md:flex-row items-center justify-between gap-4"
+        >
           <p className="text-xs text-white font-light text-center md:text-left">
             © {year} {COMPANY.name}. All rights reserved. Registered in India.
           </p>
@@ -113,7 +164,7 @@ export function Footer() {
               Developed by <a href="https://www.mxova.com" target="_blank" rel="noopener noreferrer" className="text-secondary font-[family-name:var(--font-heading)] tracking-[2px] font-bold text-sm uppercase hover:text-white transition-colors ml-1">MXOVA</a>
             </span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

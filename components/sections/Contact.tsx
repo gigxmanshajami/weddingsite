@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { Button } from "@/components/ui/Button";
 import { TextReveal } from "@/components/ui/TextReveal";
@@ -12,6 +13,15 @@ import { AnimatedDivider } from "@/components/decorative/AnimatedDivider";
 
 const inputStyles =
   "w-full px-0 py-3 bg-transparent border-b border-dark/20 text-dark placeholder:text-dark/40 focus:outline-none focus:border-secondary transition-colors font-[family-name:var(--font-body)] text-base";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: i * 0.1, ease: [0.25, 0.4, 0.25, 1] },
+  }),
+};
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,10 +52,22 @@ export function Contact() {
         <div className="absolute bottom-[20%] left-[20%] w-16 h-16 bg-secondary/5 rounded-full blur-[3px] animate-[particle-float_18s_ease-in-out_infinite_4s]" />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row bg-white/40 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl">
+      <motion.div
+        initial={{ opacity: 0, y: 50, scale: 0.97 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
+        className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row bg-white/40 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl"
+      >
 
         {/* Left Side: Luxury Image & Info */}
-        <div className="lg:w-5/12 relative min-h-[550px] lg:min-h-full flex flex-col justify-end p-8 md:p-12 lg:p-16">
+        <motion.div
+          initial={{ opacity: 0, x: -60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
+          className="lg:w-5/12 relative min-h-[550px] lg:min-h-full flex flex-col justify-end p-8 md:p-12 lg:p-16"
+        >
           <Image
             src={'/images/4.jpg'}
             alt="Luxury Indian Wedding Couple"
@@ -82,18 +104,39 @@ export function Contact() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Side: Glass Form */}
         <div className="lg:w-7/12 p-8 md:p-16 lg:p-20 flex flex-col justify-center">
-          <span className="block font-[family-name:var(--font-script)] text-5xl md:text-6xl lg:text-7xl text-primary/80 mb-1">
+          <motion.span
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            className="block font-[family-name:var(--font-script)] text-5xl md:text-6xl lg:text-7xl text-primary/80 mb-1"
+          >
             Book a
-          </span>
-          <h2 className="heading-lg text-3xl md:text-4xl lg:text-[2.75rem] tracking-[2px]! font-normal! font-[math]! uppercase text-black mb-10">
+          </motion.span>
+          <motion.h2
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={1}
+            className="heading-lg text-3xl md:text-4xl lg:text-[2.75rem] tracking-[2px]! font-normal! font-[math]! uppercase text-black mb-10"
+          >
             Consultation
-          </h2>
+          </motion.h2>
 
-          <form onSubmit={handleSubmit} className="space-y-10">
+          <motion.form
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+            onSubmit={handleSubmit}
+            className="space-y-10"
+          >
             <div className="grid sm:grid-cols-2 gap-x-8 gap-y-10">
               <div className="space-y-1">
                 <label className="text-[10px] uppercase tracking-[0.2em] text-dark/40 font-semibold">Full Name *</label>
@@ -143,10 +186,10 @@ export function Contact() {
                 {submitted ? "Message Sent ✓" : isSubmitting ? "Sending..." : "Submit Inquiry"}
               </Button>
             </div>
-          </form>
+          </motion.form>
         </div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }

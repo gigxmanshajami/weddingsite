@@ -9,7 +9,7 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, delay: i * 0.15, ease: [0.25, 0.4, 0.25, 1] },
+    transition: { duration: 0.8, delay: i * 0.15, ease: [0.25, 0.4, 0.25, 1] as const },
   }),
 };
 
@@ -19,7 +19,7 @@ const slideInLeft = {
     opacity: 1,
     x: 0,
     scale: 1,
-    transition: { duration: 0.9, ease: [0.25, 0.4, 0.25, 1] },
+    transition: { duration: 0.9, ease: [0.25, 0.4, 0.25, 1] as const },
   },
 };
 
@@ -29,7 +29,7 @@ const slideInRight = {
     opacity: 1,
     x: 0,
     scale: 1,
-    transition: { duration: 0.9, ease: [0.25, 0.4, 0.25, 1] },
+    transition: { duration: 0.9, ease: [0.25, 0.4, 0.25, 1] as const },
   },
 };
 

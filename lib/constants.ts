@@ -7,7 +7,7 @@ export const COMPANY = {
   whatsapp: "919953913445",
   instagram: "dreammoments_weddings",
   socials: {
-    instagram: "https://instagram.com/dreammoments_weddings",
+    instagram: "https://www.instagram.com/dream_moments.decor/",
     facebook: "https://facebook.com/dreammomentweddings",
     pinterest: "https://pinterest.com/dreammomentweddings",
     youtube: "https://youtube.com/@dreammomentweddings",
